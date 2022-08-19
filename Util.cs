@@ -56,6 +56,12 @@ namespace CatWorx.BadgeMaker
             int PHOTO_RIGHT_X = 486;
             int PHOTO_BOTTOM_Y = 517;
 
+            int COMPANY_NAME_Y = 150;
+
+            int EMPLOYEE_NAME_Y = 600;
+
+            int EMPLOYEE_ID_Y = 730;
+
             // instace of HTTPClient is disposed after code in the block as run
             using(HttpClient client = new HttpClient())
             {
@@ -70,9 +76,34 @@ namespace CatWorx.BadgeMaker
                     canvas.DrawImage(background, new SKRect(0, 0, BADGE_WIDTH, BADGE_HEIGHT));
                     canvas.DrawImage(photo, new SKRect(PHOTO_LEFT_X, PHOTO_TOP_Y, PHOTO_RIGHT_X, PHOTO_BOTTOM_Y));
 
+                    // SKPaint set up- create an instance of an SKPaint object and alter properties for company text
+                    SKPaint paint = new SKPaint();
+                    paint.TextSize = 42.0f;
+                    paint.IsAntialias = true;
+                    paint.Color = SKColors.White;
+                    paint.IsStroke = false;
+                    paint.TextAlign =  SKTextAlign.Center;
+                    paint.Typeface = SKTypeface.FromFamilyName("Arial");
+
+                    // Company name
+                    canvas.DrawText(employees[i].GetCompanyName(), BADGE_WIDTH / 2f, COMPANY_NAME_Y, paint);
+
+                    // SKPaint properties for employee name
+                    paint.Color = SKColors.Black;
+
+                    // Employee name
+                    canvas.DrawText(employees[i].GetFullName(), BADGE_WIDTH / 2f, EMPLOYEE_NAME_Y, paint);
+
+                    // SKPaint propertiees for employee id
+                    paint.Typeface = SKTypeface.FromFamilyName("Courier New");
+
+                    //Employee ID
+                    canvas.DrawText(employees[i].GetId().ToString(), BADGE_WIDTH / 2f, EMPLOYEE_ID_Y, paint);
+
                     SKImage finalImage = SKImage.FromBitmap(badge);
                     SKData data = finalImage.Encode();
-                    data.SaveTo(File.OpenWrite("data/employeeBadge.png"));
+                    string template = "data/{0}_badge.png";
+                    data.SaveTo(File.OpenWrite(string.Format(template, employees[i].GetId())));
                 }
             }
         }
