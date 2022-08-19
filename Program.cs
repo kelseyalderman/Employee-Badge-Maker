@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CatWorx.BadgeMaker
 {
   class Program
   {
-    static void Main(string[] args)
+    async static Task Main(string[] args)
     {
         // This is our employee-getting code now
         List<Employee> employees = GetEmployees();
@@ -17,7 +18,7 @@ namespace CatWorx.BadgeMaker
         Util.MakeCSV(employees);
 
         // Call to MakeBadges() Util method
-        Util.MakeBadges(employees);
+        await Util.MakeBadges(employees);
     }
     static List<Employee> GetEmployees()
     {
