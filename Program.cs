@@ -12,6 +12,9 @@ namespace CatWorx.BadgeMaker
 
         // Call to PrintEmployees() Util method
         Util.PrintEmployees(employees);
+
+        // Call to MakeCSV() Util method
+        Util.MakeCSV(employees);
     }
     static List<Employee> GetEmployees()
     {
