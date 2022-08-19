@@ -2,6 +2,8 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using SkiaSharp;
+
 
 namespace CatWorx.BadgeMaker
 {
@@ -40,6 +42,10 @@ namespace CatWorx.BadgeMaker
                     file.WriteLine(String.Format(template, employees[i].GetId(), employees[i].GetFullName(), employees[i].GetPhotoUrl()));
                 }
             }
+        }
+        public static void MakeBadges(List<Employee> employees) 
+        {
+
         }
     }
 }
