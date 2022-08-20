@@ -2,55 +2,32 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+
 namespace CatWorx.BadgeMaker
 {
   class Program
   {
     async static Task Main(string[] args)
     {
-        // This is our employee-getting code now
-        List<Employee> employees = GetEmployees();
+        List<Employee> employees;
+        Console.WriteLine("Would you like to fetch employee data from the API? Type YES or NO. ");
+        string response = Console.ReadLine() ?? "";
 
-        // Call to PrintEmployees() Util method
-        Util.PrintEmployees(employees);
-
-        // Call to MakeCSV() Util method
-        Util.MakeCSV(employees);
-
-        // Call to MakeBadges() Util method
-        await Util.MakeBadges(employees);
-    }
-    static List<Employee> GetEmployees()
-    {
-        List<Employee> employees = new List<Employee>();
-        
-        // Collect user values until the value is an empty string
-        while (true)
+        if (response == "YES" || response == "yes" || response == "Yes" || response == "Y" || response == "y")
         {
-            Console.WriteLine("Please enter a name (leave empty to exit): ");
-            string firstName = Console.ReadLine() ?? "";
-
-            // Break if the user hits ENTER without typing a name
-            if (firstName == "")
-            {
-                break;
-            }
-
-            Console.Write("Enter last name: ");
-            string lastName = Console.ReadLine() ?? "";
-
-            Console.Write("Enter ID: ");
-            int id = Int32.Parse(Console.ReadLine() ?? "");
-
-            Console.Write("Enter Photo URL: ");
-            string photoUrl = Console.ReadLine() ?? "";
-
-            // Create a new Employee instance
-            Employee currentEmployee = new Employee(firstName, lastName, id, photoUrl);
-            // Add currentEmployee, not a string
-            employees.Add(currentEmployee);
+            employees = await PeopleFetcher.GetFromApi();
+            Util.PrintEmployees(employees);
+            Util.MakeCSV(employees);
+            await Util.MakeBadges(employees);
         }
-        return employees;
+
+        if (response == "NO" || response == "no" || response == "No" || response == "N" || response == "n")
+        {
+            employees = PeopleFetcher.GetEmployees();
+            Util.PrintEmployees(employees);
+            Util.MakeCSV(employees);
+            await Util.MakeBadges(employees);
+        }
     }
   }
 }
