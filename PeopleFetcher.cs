@@ -16,7 +16,7 @@ namespace CatWorx.BadgeMaker
             
             while (true)
             {
-                Console.WriteLine("Please enter a name (leave empty to exit): ");
+                Console.WriteLine("Please enter first name (leave empty to exit): ");
                 string firstName = Console.ReadLine() ?? "";
                 
                 // Break if the user hits ENTER without typing a name
